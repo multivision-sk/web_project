@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <!-- Webpage Title -->
+        <title>나의 특별한 사진 이야기</title>
+
+        <!-- Required meta tags -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+              crossorigin="anonymous">
+
+        <!-- JS -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+                integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                crossorigin="anonymous"></script>
+
+        <!--구글폰트-->
+        <link href="https://fonts.googleapis.com/css2?family=Gugi&family=Sunflower:wght@500&display=swap"
+              rel="stylesheet">
+
+        <style>
+            .wrap {
+                margin: auto;
+                width: 1000px;
+                background-position: center;
+            }
+
+            #forms {
+                width: 500px;
+                height: 350px;
+                border: black solid;
+                border-radius: 10px;
+                padding: 10px;
+                margin: 20px auto;
+
+            }
+
+            #buttons-check {
+                margin: auto;
+                padding: 20px;
+
+            }
+
+            * {
+                font-family: 'Gugi', cursive;
+                font-family: 'Sunflower', sans-serif;
+            }
+
+
+        </style>
+
+        <script>
+
+            $(document).ready(function () {
+                showMem();
+            });
+
+            function PostMem() {
+                let title = $('#formGroupExampleInput').val()
+                let image = $("#formGroupExampleInput2").val();
+                let comment = $("#formGroupExampleInput3").val();
+
+                if(title == "") {
+                    alert('제목을 입력하세요')
+                } else if(image == "") {
+                    alert('이미지 주소를 입력하세요')
+                } else if (comment == "") {
+                    alert('추억을 기록하세요')
+                }
+
+
+                $.ajax({
+                    type: "POST",
+                    url: "/memory",
+                    data: {'title_give': title, 'image_give': image, 'comment_give': comment},
+                    success: function (response) {
+                        if (response["result"] == "success") {
+
+                            window.location.reload();
+                        } else {
+                            alert("서버 오류!")
+                        }
+                    }
+                })
+            }
+
+            function showMem() {
+                $.ajax({
+                    type: "GET",
+                    url: "/memory",
+                    data: {},
+                    success: function (response) {
+                        let memories = response["memories"];
+                        for (let i = 0; i < memories.length; i++) {
+                            makeCard(memories[i]["image"], memories[i]["title"], memories[i]["comment"]);
+                        }
+                    }
+                })
+
+            }
+
+            function makeCard(image, title, comment) {
+                let tempHtml = `<div class="card">
+                    <img class="card-img-top"
+                         src="${image}"
+                         alt="">
+                    <div class="card-body">
+                        <a href="#" class="card-title">${title}</a>
+                        <p class="card-text comment">${comment}</p>
+                    </div>`;
+                $("#cards-box").append(tempHtml);
+
+            }
+
+
+        </script>
+
+    </head>
+    <body>
+        <div class="wrap">
+            <div class="jumbotron jumbotron-fluid">
+                <div class="container">
+                    <h1 class="display-4">나의 특별한 사진 이야기</h1>
+                    <p class="lead">사진을 통해 보는 추억 저장소입니다.</p>
+                </div>
+            </div>
+
+            <div id="forms" class="forms-wrap">
+                <div class="form-group">
+                    <label for="formGroupExampleInput">제목</label>
+                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="formGroupExampleInput2">사진주소</label>
+                    <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="url을 복사해주세요">
+                </div>
+                <div class="form-group">
+                    <label for="formGroupExampleInput2">추억기록</label>
+                    <input type="text" class="form-control" id="formGroupExampleInput3" placeholder="추억을 기록해주세요">
+                </div>
+
+                <div id="buttons-check" class="buttons">
+                    <button type="button" class="btn btn-primary" onclick="PostMem()">저장하기</button>
+                </div>
+
+            </div>
+
+            <div id="cards-box" class="card-group">
+
+            </div>
+
+
+        </div>
+    </body>
+</html>
