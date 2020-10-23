@@ -60,6 +60,7 @@
         <script>
 
             $(document).ready(function () {
+                $('#cards-box').html("");
                 showMem();
             });
 
@@ -68,9 +69,9 @@
                 let image = $("#formGroupExampleInput2").val();
                 let comment = $("#formGroupExampleInput3").val();
 
-                if(title == "") {
+                if (title == "") {
                     alert('제목을 입력하세요')
-                } else if(image == "") {
+                } else if (image == "") {
                     alert('이미지 주소를 입력하세요')
                 } else if (comment == "") {
                     alert('추억을 기록하세요')
@@ -153,8 +154,8 @@
 
             </div>
 
-            <div id="cards-box" class="card-group">
-
+            <div id="cards-box" class="card-columns">
+                
             </div>
 
 
