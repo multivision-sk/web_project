@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <!-- Webpage Title -->
+        <title>내가 공부한 논문</title>
+
+        <!-- Required meta tags -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+              crossorigin="anonymous">
+
+        <!-- JS -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+                integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                crossorigin="anonymous"></script>
+
+        <!--구글폰트-->
+        <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@700&display=swap"
+              rel="stylesheet">
+
+        <style>
+            .wrap {
+                margin: 20px 300px;
+
+            }
+
+            #fluid {
+                width: 700px;
+                height: 500px;
+
+            }
+
+
+            * {
+                font-family: 'Nanum Gothic Coding', monospace;
+            }
+
+
+        </style>
+
+        <script>
+
+            $(document).ready(function () {
+                $('#reviews-box').html("");
+                showPaper();
+            });
+
+            function postPaper() {
+                let url = $('#formGroupExampleInput').val()
+                let date = $("#formGroupExampleInput2").val();
+                let comment = $("#formGroupExampleInput3").val();
+
+                if (url == "") {
+                    alert('url 주소를 입력하세요')
+                } else if (date == "") {
+                    alert('날짜를 입력하세요')
+                } else if (comment == "") {
+                    alert('리뷰를 입력하세요')
+                }
+
+
+                $.ajax({
+                    type: "POST",
+                    url: "/paper",
+                    data: {'url_give': url, 'date_give': date, 'comment_give': comment},
+                    success: function (response) {
+                        if (response["result"] == "success") {
+
+                            window.location.reload();
+                        } else {
+                            alert("서버 오류!")
+                        }
+                    }
+                })
+            }
+
+            function showPaper() {
+                $.ajax({
+                    type: "GET",
+                    url: "/paper",
+                    data: {},
+                    success: function (response) {
+                        let reviews = response["papers"];
+                        for (let i = 0; i < reviews.length; i++) {
+                            makeCard(reviews[i]["title"], reviews[i]["date"], reviews[i]["abstract"], reviews[i]["comment"]);
+                        }
+                    }
+                })
+
+            }
+
+            function makeCard(title, date, abstract, comment) {
+                let tempHtml = `<tr>
+                            <td>${title}</td>
+                            <td>${date}</td>
+                            <td>${abstract}</td>
+                            <td>${comment}</td>
+
+                        </tr> `;
+                $("#reviews-box").append(tempHtml);
+
+            }
+
+
+        </script>
+
+    </head>
+    <body>
+        <div class="wrap">
+            <img src="https://miro.medium.com/max/1200/1*Fu1tVeXmVcFohmpFjXVkiA.png"
+                 id="fluid" alt="">
+
+            <div class="title-group">
+                <p class="titles" style="font-size: xx-large">내가 공부한 논문</p>
+            </div>
+
+            <div id="forms" class="forms-wrap">
+                <div class="form-group">
+                    <label for="formGroupExampleInput">url 주소</label>
+                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="url을 복사해주세요">
+                </div>
+                <div class="form-group">
+                    <label for="formGroupExampleInput2">날짜</label>
+                    <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="공부한 날짜 입력">
+                </div>
+                <div class="form-group">
+                    <label for="formGroupExampleInput2">리뷰</label>
+                    <input type="text" class="form-control" id="formGroupExampleInput3" placeholder="간단한 리뷰 등록!">
+                </div>
+
+                <div id="buttons-check" class="buttons">
+                    <p>
+                        <button type="button" class="btn btn-primary" onclick="postPaper()">저장하기</button>
+                    </p>
+                </div>
+            </div>
+
+            <div class="reviews">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">제목</th>
+                        <th scope="col">공부날짜</th>
+                        <th scope="col">초록</th>
+                        <th scope="col">리뷰</th>
+                    </tr>
+                    </thead>
+                    <tbody id="reviews-box">
+                    </tbody>
+                </table>
+            </div>
+
+
+        </div>
+    </body>
+</html>
