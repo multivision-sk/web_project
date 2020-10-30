@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <!-- Webpage Title -->
+        <title>Hair Here! 프로젝트</title>
+
+        <!-- Required meta tags -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+              crossorigin="anonymous">
+
+        <!-- JS -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+                integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                crossorigin="anonymous"></script>
+
+        <!--구글폰트-->
+        <link href="https://fonts.googleapis.com/css2?family=Gugi&family=Sunflower:wght@500&display=swap"
+              rel="stylesheet">
+
+        <style>
+            #home-buttons {
+                position: absolute;
+                right: 200px;
+                top: 100px;
+
+            }
+
+
+            .title-font {
+                position: absolute;
+                left: 200px;
+                top: 10px;
+
+            }
+
+            .table {
+                width: 500px;
+                height: auto;
+                margin: auto;
+                position: absolute;
+                left: 400px;
+                top: 300px;
+                text-align: center;
+            }
+
+            .input-group {
+                position: absolute;
+                top: 200px;
+                left: 400px;
+                width: 500px;
+                height: 50px;
+            }
+
+
+        </style>
+
+        <script>
+
+            $(document).ready(function () {
+
+                showStyle();
+            });
+
+            function searchStyle() {
+
+                $('#table-box').empty("");
+
+                let search_input = $('#input-box').val();
+                if (search_input == "") {
+                    alert('헤어스타일을 입력해주세요')
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "/style",
+                    data: {'search_input': search_input},
+                    success: function (response) {
+                        if (response["result"] == "success") {
+                            location.reload();
+                        }
+                    }
+                });
+
+            }
+
+
+            function showStyle() {
+                $.ajax({
+                    type: "GET",
+                    url: "/style",
+                    data: {},
+                    success: function (response) {
+                        if (response["result"] == "success") {
+
+                            let style_title = response['styles'];
+                            for (let i = 0; i < style_title.length; i++) {
+                                let style_list = style_title[i];
+
+                                let style_url = style_list['style_url']
+
+                                let tempHtml = `<tr>
+                        <th scope="col"><a href="${style_url}"><img src="${style_url}"></a></th>
+
+                    </tr>`
+                                $('#table-box').append(tempHtml)
+
+                            }
+                        } else {
+                            alert("서버 오류!")
+                        }
+                    }
+                });
+
+            }
+
+
+        </script>
+
+
+    </head>
+
+    <body>
+
+        <div class="title-font">
+            <h1 style="color:black;font-size:50px;text-shadow:3px 3px 10px gray"> Hair Here </h1>
+            <h5>당신을 위한 헤어 스타일링</h5>
+        </div>
+
+        <div class="make-buttons" id="home-buttons">
+            <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top"
+                    title="Tooltip on top" id="home-btn" onclick="location.href='/'">
+                HairHome
+            </button>
+            <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="right"
+                    title="Tooltip on right" id="shop-btn" onclick="location.href='/get_shop'">
+                HairShop
+            </button>
+            <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom"
+                    title="Tooltip on bottom" id="style-btn" onclick="location.href='/get_style'">
+                HairStyle
+            </button>
+            <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="left"
+                    title="Tooltip on left" id="review-btn" onclick="location.href='/get_review'">
+                HairReview
+            </button>
+        </div>
+
+        <div class="input-group">
+            <input type="text" class="form-control" aria-label="Text input with dropdown button" id="input-box"
+                   placeholder="원하는 헤어스타일(ex.수지 헤어스타일)">
+            <div class="input-group-append">
+
+                <button onclick="searchStyle()" class="btn btn-outline-secondary dropdown-toggle" type="button"
+                        data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">HairStyle
+                </button>
+
+            </div>
+        </div>
+
+
+        <div class="shop-list">
+            <table class="table" id="table-box">
+                <thead>
+                <tr>
+                    <th scope="col">HairStyleList</th>
+                </tr>
+                </thead>
+                <tbody id="shop-box">
+                </tbody>
+            </table>
+        </div>
+
+    </body>
+</html>
