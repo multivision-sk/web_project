@@ -1,6 +1,6 @@
 from flask import Flask, render_template, jsonify, request
 import requests
-from bs4 import BeautifulSoup
+#from bs4 import BeautifulSoup
 from pymongo import MongoClient
 
 app = Flask(__name__)
@@ -94,6 +94,34 @@ def read_style():
     styles = list(db.styles.find({}, {'_id': False}))
 
     return jsonify({'result': 'success', 'styles': styles})
+
+
+@app.route('/review', methods=['POST'])
+def write_review() :
+    hair_shop  = request.form['shop']
+    hair_style = request.form['style']
+    hair_date = request.form['date']
+    hair_comment = request.form['comment']
+
+    doc = {
+        'shop' : hair_shop ,
+        'style' : hair_style,
+        'date' : hair_date,
+        'comment' : hair_comment
+    }
+
+    db.all.insert_one(doc)
+
+    return jsonify({'result': 'success'})
+
+
+@app.route('/review', methods=['GET'])
+def read_review():
+    all_memo = list(db.all.find({}, {'_id': False}).sort('date',1))
+
+    return jsonify({'result': 'success', 'comments': all_memo})
+
+
 
 
 

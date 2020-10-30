@@ -32,14 +32,7 @@
                 right: 200px;
                 top: 100px;
 
-            }
 
-            .carousel-inner {
-                position: absolute;
-                left: 300px;
-                top: 200px;
-                width: 700px;
-                height: 500px;
             }
 
 
@@ -50,18 +43,115 @@
 
             }
 
+            #post-box {
+                position: absolute;
+                left: 450px;
+                top: 200px;
+                width: 400px;
+                height: 450px;
+                border: gray solid;
+                padding: 10px;
+                border-radius: 10px;
+            }
+
+            .wrap{
+                margin : auto;
+            }
+
+            #cards-box{
+                position: absolute;
+                left : 450px ;
+                top: 700px ;
+
+            }
+
+            .card{
+                width : 200px ;
+                height: 200px;
+                text-align: center;
+
+            }
+
+
+
+
 
         </style>
 
         <script>
 
+            $(document).ready(function() {
+
+                $('#cards-box').empty();
+                showReview() ;
+            }
+            )
+
+            function postReview() {
+
+
+
+                let hairShop = $('#post-shop').val();
+                let hairStyle = $('#post-style').val();
+                let hairDate = $('#post-date').val();
+                let hairComment = $('#post-comment').val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/review",
+                    data: {'shop': hairShop, 'style': hairStyle, 'date': hairDate, 'comment': hairComment},
+                    success: function (response) {
+                        if (response["result"] == "success") {
+                            location.reload();
+                        }
+                    }
+                });
+
+            }
+
+
+            function showReview() {
+
+                $.ajax({
+                    type: "GET",
+                    url: "/review",
+                    data: {},
+                    success: function (response) {
+                        if (response["result"] == "success") {
+
+                            let memos = response['comments'];
+                            for (let i = 0; i < memos.length; i++) {
+                                let hairShop = memos[i]['shop'];
+                                let hairStyle = memos[i]['style'];
+                                let hairDate = memos[i]['date'];
+                                let hairComment = memos[i]['comment'];
+
+
+                                let tempHtml = `<div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">${hairShop}</h5>
+                    <h5 class="card-title">${hairStyle}</h5>
+                    <h5 class="card-title">${hairDate}</h5>
+                    <p class="card-text">${hairComment}</p>
+                </div>
+            </div>`
+
+                                $('#cards-box').append(tempHtml);
+
+                            }
+                        }
+
+                    }
+                });
+            }
 
         </script>
+
 
     </head>
     <body>
 
-
+<div class="wrap">
         <div class="title-font">
             <h1 style="color:black;font-size:50px;text-shadow:3px 3px 10px gray"> Hair Here </h1>
             <h5>당신을 위한 헤어 스타일링</h5>
@@ -85,22 +175,90 @@
                 HairReview
             </button>
         </div>
-        <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img class="d-block w-100" src="https://www.mainnews.kr/news/photo/201812/67021_53955_4221.jpg"
-                         alt="First slide">
+        <div id="post-box" class="form-post">
+            <div>
+                <div class="form-group">
+                    <label for="post-shop">헤어샵</label>
+                    <input id="post-shop" class="form-control" placeholder="">
                 </div>
-                <div class="carousel-item">
-                    <img class="d-block w-100"
-                         src="https://t1.daumcdn.net/liveboard/hairfit/8c21b5cc49cf49e9809cad3ac48178cf.JPG"
-                         alt="Second slide">
+                <div class="form-group">
+                    <label for="post-style">헤어스타일</label>
+                    <input id="post-style" class="form-control" placeholder="">
                 </div>
-                <div class="carousel-item">
-                    <img class="d-block w-100" src="https://www.womentimes.co.kr/news/photo/201511/17794_30995_5625.jpg"
-                         alt="Third slide">
+                <div class="form-group">
+                    <label for="post-date">날짜</label>
+                    <input id="post-date" class="form-control" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="post-comment">간단 코멘트</label>
+                    <textarea id="post-comment" class="form-control" rows="2"></textarea>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="postReview()">저장하기</button>
+            </div>
+        </div>
+                    <div id="cards-box" class="card-columns">
+                <div class="card">
+                    <img class="card-img-top"
+                         src="https://www.eurail.com/content/dam/images/eurail/Italy%20OCP%20Promo%20Block.adaptive.767.1535627244182.jpg"
+                         alt="Card image cap">
+                    <div class="card-body">
+                        <a href="#" class="card-title">여기 기사 제목이 들어가죠</a>
+                        <p class="card-text">기사의 요약 내용이 들어갑니다. 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라만세 무궁화 삼천리 화려강산...</p>
+                        <p class="card-text comment">여기에 코멘트가 들어갑니다.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img class="card-img-top"
+                         src="https://www.eurail.com/content/dam/images/eurail/Italy%20OCP%20Promo%20Block.adaptive.767.1535627244182.jpg"
+                         alt="Card image cap">
+                    <div class="card-body">
+                        <a href="#" class="card-title">여기 기사 제목이 들어가죠</a>
+                        <p class="card-text">기사의 요약 내용이 들어갑니다. 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라만세 무궁화 삼천리 화려강산...</p>
+                        <p class="card-text comment">여기에 코멘트가 들어갑니다.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img class="card-img-top"
+                         src="https://www.eurail.com/content/dam/images/eurail/Italy%20OCP%20Promo%20Block.adaptive.767.1535627244182.jpg"
+                         alt="Card image cap">
+                    <div class="card-body">
+                        <a href="#" class="card-title">여기 기사 제목이 들어가죠</a>
+                        <p class="card-text">기사의 요약 내용이 들어갑니다. 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라만세 무궁화 삼천리 화려강산...</p>
+                        <p class="card-text comment">여기에 코멘트가 들어갑니다.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img class="card-img-top"
+                         src="https://www.eurail.com/content/dam/images/eurail/Italy%20OCP%20Promo%20Block.adaptive.767.1535627244182.jpg"
+                         alt="Card image cap">
+                    <div class="card-body">
+                        <a href="#" class="card-title">여기 기사 제목이 들어가죠</a>
+                        <p class="card-text">기사의 요약 내용이 들어갑니다. 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라만세 무궁화 삼천리 화려강산...</p>
+                        <p class="card-text comment">여기에 코멘트가 들어갑니다.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img class="card-img-top"
+                         src="https://www.eurail.com/content/dam/images/eurail/Italy%20OCP%20Promo%20Block.adaptive.767.1535627244182.jpg"
+                         alt="Card image cap">
+                    <div class="card-body">
+                        <a href="#" class="card-title">여기 기사 제목이 들어가죠</a>
+                        <p class="card-text">기사의 요약 내용이 들어갑니다. 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라만세 무궁화 삼천리 화려강산...</p>
+                        <p class="card-text comment">여기에 코멘트가 들어갑니다.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img class="card-img-top"
+                         src="https://www.eurail.com/content/dam/images/eurail/Italy%20OCP%20Promo%20Block.adaptive.767.1535627244182.jpg"
+                         alt="Card image cap">
+                    <div class="card-body">
+                        <a href="#" class="card-title">여기 기사 제목이 들어가죠</a>
+                        <p class="card-text">기사의 요약 내용이 들어갑니다. 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라만세 무궁화 삼천리 화려강산...</p>
+                        <p class="card-text comment">여기에 코멘트가 들어갑니다.</p>
+                    </div>
                 </div>
             </div>
+
         </div>
 
     </body>
