@@ -32,7 +32,7 @@ def post_shop():
     searching = request.form['search_input']
     url = 'https://dapi.kakao.com/v2/local/search/keyword.json?query={}'.format(searching)
     headers = {
-        "Authorization": "KakaoAK appkey"
+        "Authorization": "KakaoAK appkey"  #appkey is personalized. 
     }
     places = requests.get(url, headers=headers).json()['documents']
 
