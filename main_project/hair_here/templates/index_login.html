@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <!-- Webpage Title -->
+        <title>Hair Here! 프로젝트</title>
+
+        <!-- Required meta tags -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+              crossorigin="anonymous">
+
+        <!-- JS -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+                integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                crossorigin="anonymous"></script>
+
+        <!--구글폰트-->
+        <link href="https://fonts.googleapis.com/css2?family=Gugi&family=Sunflower:wght@500&display=swap"
+              rel="stylesheet">
+
+        <style>
+
+
+        </style>
+
+        <script>
+            // 로딩 후 바로 실행
+            $(document).ready(function () {
+                if ($.cookie('token') == undefined) {
+
+                    alert('먼저 로그인을 해주세요')
+                    window.location.href = '/login'
+                } else {
+
+                    load_user_info()
+                }
+            });
+
+
+            function load_user_info() {
+                $.ajax({
+                    type: "GET",
+                    url: "/api/nick",
+                    headers: {'token_give': $.cookie('mytoken')},
+                    data: {},
+                    success: function (response) {
+                        if (response['result'] == 'success') {
+
+                            $('#nickname').text(response['nickname'])
+                        } else {
+
+                            alert(response['msg'])
+                            window.location.href = '/login'
+                        }
+                    }
+                })
+            }
+
+            // 로그아웃은 내가 가지고 있는 토큰만 쿠키에서 없애면 됩니다.
+            function logout() {
+                $.removeCookie('mytoken');
+                alert('로그아웃!')
+                window.location.href = '/login'
+            }
+
+        </script>
+
+    </head>
+    <body>
+        <div class="wrap">
+            <p>
+            <h1>로그인하고 30초 동안만 볼 수 있는 페이지입니다.</h1>
+            <h1>계속 새로고침 해보세요</h1>
+            </p>
+            <h5>나의 닉네임은: <span id="nickname"></span></h5>
+            <button type="button" class="btn btn-danger" onclick="logout()">로그아웃하기</button>
+        </div>
+
+    </body>
+</html>
+

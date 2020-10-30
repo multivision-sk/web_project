@@ -22,6 +22,17 @@
                 integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
                 crossorigin="anonymous"></script>
 
+        <!-- 쿠키 사용을 위한 Jquery-cookie 임포트 -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+                integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                crossorigin="anonymous"></script>
+
+
         <!--구글폰트-->
         <link href="https://fonts.googleapis.com/css2?family=Gugi&family=Sunflower:wght@500&display=swap"
               rel="stylesheet">
@@ -54,41 +65,36 @@
                 border-radius: 10px;
             }
 
-            .wrap{
-                margin : auto;
-            }
 
-            #cards-box{
+            #cards-box {
                 position: absolute;
-                left : 450px ;
-                top: 700px ;
+                left: 70px;
+                top: 700px;
 
             }
 
-            .card{
-                width : 200px ;
-                height: 200px;
+            .card {
+                width: 300px;
+                height: 300px;
                 text-align: center;
+                background-color: palegoldenrod;
+
 
             }
-
-
-
 
 
         </style>
 
         <script>
 
-            $(document).ready(function() {
+            $(document).ready(function () {
 
-                $('#cards-box').empty();
-                showReview() ;
-            }
+
+                    showReview();
+                }
             )
 
             function postReview() {
-
 
 
                 let hairShop = $('#post-shop').val();
@@ -111,6 +117,8 @@
 
 
             function showReview() {
+
+                $('#cards-box').html("");
 
                 $.ajax({
                     type: "GET",
@@ -145,38 +153,44 @@
                 });
             }
 
+
         </script>
 
 
     </head>
     <body>
 
-<div class="wrap">
-        <div class="title-font">
-            <h1 style="color:black;font-size:50px;text-shadow:3px 3px 10px gray"> Hair Here </h1>
-            <h5>당신을 위한 헤어 스타일링</h5>
-        </div>
+        <div class="wrap">
+            <div class="title-font">
+                <h1 style="color:black;font-size:50px;text-shadow:3px 3px 10px gray"> Hair Here </h1>
+                <h5>당신을 위한 헤어 스타일링</h5>
+            </div>
 
-        <div class="make-buttons" id="home-buttons">
-            <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top"
-                    title="Tooltip on top" id="home-btn" onclick="location.href='/'">
-                HairHome
-            </button>
-            <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="right"
-                    title="Tooltip on right" id="shop-btn" onclick="location.href='/get_shop'">
-                HairShop
-            </button>
-            <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom"
-                    title="Tooltip on bottom" id="style-btn" onclick="location.href='/get_style'">
-                HairStyle
-            </button>
-            <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="left"
-                    title="Tooltip on left" id="review-btn" onclick="location.href='/get_review'">
-                HairReview
-            </button>
-        </div>
-        <div id="post-box" class="form-post">
-            <div>
+            <div class="make-buttons" id="home-buttons">
+                <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top"
+                        title="Tooltip on top" id="home-btn" onclick="location.href='/'">
+                    HairHome
+                </button>
+                <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="right"
+                        title="Tooltip on right" id="shop-btn" onclick="location.href='/get_shop'">
+                    HairShop
+                </button>
+                <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom"
+                        title="Tooltip on bottom" id="style-btn" onclick="location.href='/get_style'">
+                    HairStyle
+                </button>
+                <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="left"
+                        title="Tooltip on left" id="review-btn" onclick="location.href='/get_review'">
+                    HairReview
+                </button>
+
+                <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="left"
+                        title="Tooltip on left" id="user-btn" onclick="location.href='/login'">
+                    HairUser
+                </button>
+            </div>
+            <div id="post-box" class="form-post">
+
                 <div class="form-group">
                     <label for="post-shop">헤어샵</label>
                     <input id="post-shop" class="form-control" placeholder="">
@@ -194,70 +208,23 @@
                     <textarea id="post-comment" class="form-control" rows="2"></textarea>
                 </div>
                 <button type="button" class="btn btn-primary" onclick="postReview()">저장하기</button>
+
             </div>
-        </div>
-                    <div id="cards-box" class="card-columns">
+
+            <div id="cards-box" class="card-columns">
                 <div class="card">
-                    <img class="card-img-top"
-                         src="https://www.eurail.com/content/dam/images/eurail/Italy%20OCP%20Promo%20Block.adaptive.767.1535627244182.jpg"
-                         alt="Card image cap">
                     <div class="card-body">
-                        <a href="#" class="card-title">여기 기사 제목이 들어가죠</a>
-                        <p class="card-text">기사의 요약 내용이 들어갑니다. 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라만세 무궁화 삼천리 화려강산...</p>
-                        <p class="card-text comment">여기에 코멘트가 들어갑니다.</p>
+                        <h5 class="card-title"></h5>
+                        <h5 class="card-title"></h5>
+                        <h5 class="card-title"></h5>
+                        <p class="card-text"></p>
+
                     </div>
+
                 </div>
-                <div class="card">
-                    <img class="card-img-top"
-                         src="https://www.eurail.com/content/dam/images/eurail/Italy%20OCP%20Promo%20Block.adaptive.767.1535627244182.jpg"
-                         alt="Card image cap">
-                    <div class="card-body">
-                        <a href="#" class="card-title">여기 기사 제목이 들어가죠</a>
-                        <p class="card-text">기사의 요약 내용이 들어갑니다. 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라만세 무궁화 삼천리 화려강산...</p>
-                        <p class="card-text comment">여기에 코멘트가 들어갑니다.</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <img class="card-img-top"
-                         src="https://www.eurail.com/content/dam/images/eurail/Italy%20OCP%20Promo%20Block.adaptive.767.1535627244182.jpg"
-                         alt="Card image cap">
-                    <div class="card-body">
-                        <a href="#" class="card-title">여기 기사 제목이 들어가죠</a>
-                        <p class="card-text">기사의 요약 내용이 들어갑니다. 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라만세 무궁화 삼천리 화려강산...</p>
-                        <p class="card-text comment">여기에 코멘트가 들어갑니다.</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <img class="card-img-top"
-                         src="https://www.eurail.com/content/dam/images/eurail/Italy%20OCP%20Promo%20Block.adaptive.767.1535627244182.jpg"
-                         alt="Card image cap">
-                    <div class="card-body">
-                        <a href="#" class="card-title">여기 기사 제목이 들어가죠</a>
-                        <p class="card-text">기사의 요약 내용이 들어갑니다. 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라만세 무궁화 삼천리 화려강산...</p>
-                        <p class="card-text comment">여기에 코멘트가 들어갑니다.</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <img class="card-img-top"
-                         src="https://www.eurail.com/content/dam/images/eurail/Italy%20OCP%20Promo%20Block.adaptive.767.1535627244182.jpg"
-                         alt="Card image cap">
-                    <div class="card-body">
-                        <a href="#" class="card-title">여기 기사 제목이 들어가죠</a>
-                        <p class="card-text">기사의 요약 내용이 들어갑니다. 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라만세 무궁화 삼천리 화려강산...</p>
-                        <p class="card-text comment">여기에 코멘트가 들어갑니다.</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <img class="card-img-top"
-                         src="https://www.eurail.com/content/dam/images/eurail/Italy%20OCP%20Promo%20Block.adaptive.767.1535627244182.jpg"
-                         alt="Card image cap">
-                    <div class="card-body">
-                        <a href="#" class="card-title">여기 기사 제목이 들어가죠</a>
-                        <p class="card-text">기사의 요약 내용이 들어갑니다. 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라만세 무궁화 삼천리 화려강산...</p>
-                        <p class="card-text comment">여기에 코멘트가 들어갑니다.</p>
-                    </div>
-                </div>
+
             </div>
+
 
         </div>
 

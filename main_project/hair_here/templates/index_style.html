@@ -130,54 +130,62 @@
 
     <body>
 
-        <div class="title-font">
-            <h1 style="color:black;font-size:50px;text-shadow:3px 3px 10px gray"> Hair Here </h1>
-            <h5>당신을 위한 헤어 스타일링</h5>
-        </div>
+        <div class="wrap">
 
-        <div class="make-buttons" id="home-buttons">
-            <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top"
-                    title="Tooltip on top" id="home-btn" onclick="location.href='/'">
-                HairHome
-            </button>
-            <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="right"
-                    title="Tooltip on right" id="shop-btn" onclick="location.href='/get_shop'">
-                HairShop
-            </button>
-            <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom"
-                    title="Tooltip on bottom" id="style-btn" onclick="location.href='/get_style'">
-                HairStyle
-            </button>
-            <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="left"
-                    title="Tooltip on left" id="review-btn" onclick="location.href='/get_review'">
-                HairReview
-            </button>
-        </div>
-
-        <div class="input-group">
-            <input type="text" class="form-control" aria-label="Text input with dropdown button" id="input-box"
-                   placeholder="원하는 헤어스타일(ex.수지 헤어스타일)">
-            <div class="input-group-append">
-
-                <button onclick="searchStyle()" class="btn btn-outline-secondary dropdown-toggle" type="button"
-                        data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">HairStyle
-                </button>
-
+            <div class="title-font">
+                <h1 style="color:black;font-size:50px;text-shadow:3px 3px 10px gray"> Hair Here </h1>
+                <h5>당신을 위한 헤어 스타일링</h5>
             </div>
-        </div>
+
+            <div class="make-buttons" id="home-buttons">
+                <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top"
+                        title="Tooltip on top" id="home-btn" onclick="location.href='/'">
+                    HairHome
+                </button>
+                <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="right"
+                        title="Tooltip on right" id="shop-btn" onclick="location.href='/get_shop'">
+                    HairShop
+                </button>
+                <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom"
+                        title="Tooltip on bottom" id="style-btn" onclick="location.href='/get_style'">
+                    HairStyle
+                </button>
+                <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="left"
+                        title="Tooltip on left" id="review-btn" onclick="location.href='/get_review'">
+                    HairReview
+                </button>
+                <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="left"
+                        title="Tooltip on left" id="user-btn" onclick="location.href='/login'">
+                    HairUser
+                </button>
+            </div>
+
+            <div class="input-group">
+                <input type="text" class="form-control" aria-label="Text input with dropdown button" id="input-box"
+                       placeholder="원하는 헤어스타일(ex.수지 헤어스타일)">
+                <div class="input-group-append">
+
+                    <button onclick="searchStyle()" class="btn btn-outline-secondary dropdown-toggle" type="button"
+                            data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">HairStyle
+                    </button>
+
+                </div>
+            </div>
 
 
-        <div class="shop-list">
-            <table class="table" id="table-box">
-                <thead>
-                <tr>
-                    <th scope="col">HairStyleList</th>
-                </tr>
-                </thead>
-                <tbody id="shop-box">
-                </tbody>
-            </table>
+            <div class="shop-list">
+                <table class="table" id="table-box">
+                    <thead>
+                    <tr>
+                        <th scope="col">HairStyleList</th>
+                    </tr>
+                    </thead>
+                    <tbody id="shop-box">
+                    </tbody>
+                </table>
+            </div>
+
         </div>
 
     </body>
