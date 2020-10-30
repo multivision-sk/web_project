@@ -67,7 +67,7 @@ def post_style():
     searching = request.form['search_input']
     url = 'https://dapi.kakao.com/v2/search/image.json?query={}'.format(searching)
     headers = {
-        "Authorization": "KakaoAK 55e7f20c7f8ea3c682fa473fc5d52869"
+        "Authorization": "KakaoAK appkey"
     }
     contents = requests.get(url, headers=headers).json()['documents']
 
