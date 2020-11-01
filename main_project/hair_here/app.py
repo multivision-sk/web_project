@@ -1,8 +1,7 @@
-from flask import Flask, render_template, jsonify, request, session, redirect,url_for
+from flask import Flask, render_template, jsonify, request, session, redirect, url_for
 import requests
 # from bs4 import BeautifulSoup
 from pymongo import MongoClient
-
 
 app = Flask(__name__)
 
@@ -42,6 +41,7 @@ def get_review():
 def login():
     return render_template('login.html')
 
+
 @app.route('/register')
 def register():
     return render_template('register.html')
@@ -58,9 +58,12 @@ def post_shop():
 
     db.shops.drop()
 
+
+
     for shop in places:
         shop_name = shop['place_name']
         shop_url = shop['place_url']
+
 
         doc = {
             'shop_name': shop_name,
@@ -92,10 +95,13 @@ def post_style():
 
     for style in contents:
         style_url = style['thumbnail_url']
+        # url = style['doc_url']
 
         doc = {
 
             'style_url': style_url
+            # 'url': url
+
         }
 
         db.styles.insert_one(doc)
@@ -137,7 +143,7 @@ def read_review():
 
 
 @app.route('/api/register', methods=['POST'])
-def api_register() :
+def api_register():
     id_receive = request.form['id_give']
     pw_receive = request.form['pw_give']
     nickname_receive = request.form['nickname_give']
@@ -145,14 +151,15 @@ def api_register() :
     pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
 
     doc = {
-        'id' : id_receive,
-        'pw' : pw_hash,
-        'nick' : nickname_receive
+        'id': id_receive,
+        'pw': pw_hash,
+        'nick': nickname_receive
     }
 
     db.reguser.insert_one(doc)
 
-    return jsonify({'result':'success'})
+    return jsonify({'result': 'success'})
+
 
 @app.route('/api/login', methods=['POST'])
 def api_login():
@@ -161,30 +168,30 @@ def api_login():
 
     pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
 
-    result = db.reguser.find_one({'id':id_receive,'pw':pw_hash})
+    result = db.reguser.find_one({'id': id_receive, 'pw': pw_hash})
 
-    if result is not None :
-        payload= {
-            'id' : id_receive,
-            'exp' : datetime.datetime.utcnow() + datetime.timedelta(seconds=10)
+    if result is not None:
+        payload = {
+            'id': id_receive,
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=10)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256').decode('utf-8')
 
-        return jsonify({'result':'success','token':token})
-    else :
-        return jsonify({'result':'fail','msg':'아이디/비밀번호가 일치하지 않습니다.'})
+        return jsonify({'result': 'success', 'token': token})
+    else:
+        return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
 
-@app.route('/api/nick',methods=['GET'])
-def api_valid() :
+
+@app.route('/api/nick', methods=['GET'])
+def api_valid():
     token_receive = request.headers['token_give']
     payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
 
-    try :
-        userinfo = db.reguser.find_one({'id' : payload['id']},{'_id':0})
-        return jsonify({'result':'success','nickname':userinfo['nick']})
-    except :
-        return jsonify({'result':'fail','msg':'로그인 시간이 만료되었습니다.'})
-
+    try:
+        userinfo = db.reguser.find_one({'id': payload['id']}, {'_id': 0})
+        return jsonify({'result': 'success', 'nickname': userinfo['nick']})
+    except:
+        return jsonify({'result': 'fail', 'msg': '로그인 시간이 만료되었습니다.'})
 
 
 if __name__ == '__main__':
