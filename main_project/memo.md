@@ -29,6 +29,8 @@ hairhere.shop 1년 사용 -> api 등록 시 도메인 주소 입력 (20201029)
 
 13. 로그인 유저만 리뷰 페이지에 글쓰고 삭제하는 기능 추가하기 
 
+14. git push 할때 api key / client id, secret 제외하는 방법 문의 
+
 
 
 
