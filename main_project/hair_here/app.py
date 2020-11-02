@@ -52,18 +52,17 @@ def post_shop():
     searching = request.form['search_input']
     url = 'https://dapi.kakao.com/v2/local/search/keyword.json?query={}'.format(searching)
     headers = {
-        "Authorization": "KakaoAK apikey"  
+
+        "Authorization": "KakaoAK 55e7f20c7f8ea3c682fa473fc5d52869"
+
     }
     places = requests.get(url, headers=headers).json()['documents']
 
     db.shops.drop()
 
-
-
     for shop in places:
         shop_name = shop['place_name']
         shop_url = shop['place_url']
-
 
         doc = {
             'shop_name': shop_name,
@@ -85,22 +84,24 @@ def read_shop():
 @app.route('/style', methods=['POST'])
 def post_style():
     searching = request.form['search_input']
-    url = 'https://dapi.kakao.com/v2/search/image.json?query={}'.format(searching)
-    headers = {
-        "Authorization": "KakaoAK apikey"
-    }
-    contents = requests.get(url, headers=headers).json()['documents']
 
     db.styles.drop()
 
+    client_id = "3cM33RVzsCGd7lI0ZmCU"
+    client_secret = "KoezOPz8XR"
+
+    url = "https://openapi.naver.com/v1/search/image?query={}&display=30&sort=sim".format(searching)
+    headers = {'X-Naver-Client-Id': client_id, 'X-Naver-Client-Secret': client_secret}
+    contents = requests.get(url, headers=headers).json()['items']
+
     for style in contents:
-        style_url = style['thumbnail_url']
-        # url = style['doc_url']
+        style_url = style['thumbnail']
+        img_url = style['link']
 
         doc = {
 
-            'style_url': style_url
-            # 'url': url
+            'style_url': style_url,
+            'img_url': img_url
 
         }
 
@@ -127,7 +128,10 @@ def write_review():
         'shop': hair_shop,
         'style': hair_style,
         'date': hair_date,
-        'comment': hair_comment
+        'comment': hair_comment,
+        'like' : 0 ,
+        'hate' : 0
+
     }
 
     db.all.insert_one(doc)
@@ -140,6 +144,29 @@ def read_review():
     all_memo = list(db.all.find({}, {'_id': False}).sort('date', 1))
 
     return jsonify({'result': 'success', 'comments': all_memo})
+
+
+@app.route('/api/like', methods=['POST'])
+def like_post():
+
+    shop_receive = request.form['shop_give']
+
+    shop_like = db.all.find_one({'shop': shop_receive})
+    new_like = shop_like['like'] + 1
+    db.all.update_one({'shop': shop_receive}, {'$set': {'like': new_like}})
+
+    return jsonify({'result': 'success'})
+
+
+@app.route('/api/hate', methods=['POST'])
+def hate_post():
+    shop_receive = request.form['shop_give']
+
+    shop_hate = db.all.find_one({'shop': shop_receive})
+    new_hate = shop_hate['hate'] + 1
+    db.all.update_one({'shop': shop_receive}, {'$set': {'hate': new_hate}})
+
+    return jsonify({'result': 'success'})
 
 
 @app.route('/api/register', methods=['POST'])
