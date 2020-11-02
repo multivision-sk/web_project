@@ -64,12 +64,6 @@
                 })
             }
 
-            // 로그아웃은 내가 가지고 있는 토큰만 쿠키에서 없애면 됩니다.
-            function logout() {
-                $.removeCookie('mytoken');
-                alert('로그아웃!')
-                window.location.href = '/login'
-            }
 
         </script>
 
@@ -81,7 +75,6 @@
             <h1>계속 새로고침 해보세요</h1>
             </p>
             <h5>나의 닉네임은: <span id="nickname"></span></h5>
-            <button type="button" class="btn btn-danger" onclick="logout()">로그아웃하기</button>
         </div>
 
     </body>

@@ -44,15 +44,16 @@
 
             }
 
-            .table {
-                width: 500px;
-                height: auto;
-                margin: auto;
-                position: absolute;
-                left: 400px;
-                top: 300px;
-                text-align: center;
+            .card-img-top {
+                width: 200px;
+                height: 200px;
             }
+
+            #cards-box > div.card {
+                width: 200px;
+                height: 200px;
+            }
+
 
             .input-group {
                 position: absolute;
@@ -60,6 +61,14 @@
                 left: 400px;
                 width: 500px;
                 height: 50px;
+            }
+
+            #cards-box {
+                position: absolute;
+                left: auto;
+                top: 400px;
+                text-align: center;
+
             }
 
 
@@ -97,6 +106,7 @@
 
 
             function showStyle() {
+                $('#cards-box').empty();
                 $.ajax({
                     type: "GET",
                     url: "/style",
@@ -109,14 +119,24 @@
                                 let style_list = style_title[i];
 
                                 let style_url = style_list['style_url']
-                                // let url = style_list['url']
+                                let url = style_list['img_url']
 
 
-                                let tempHtml = `<tr>
-                        <th scope="col"><a href="${style_url}"><img src="${style_url}"></a></th>
+                                //             let tempHtml = `<tr>
+                                //     <th scope="col"><a href="${style_url}"><img src="${style_url}"></a></th>
+                                //
+                                // </tr>`
+                                //             $('#table-box').append(tempHtml)
 
-                    </tr>`
-                                $('#table-box').append(tempHtml)
+                                let tempHtml = ` <div class="card">
+                   <a href="${url}"> <img class="card-img-top"
+                         src="${style_url}"
+                         alt="No Image"></a>
+                </div> `
+
+
+                                $('#cards-box').append(tempHtml);
+
 
                             }
                         } else {
@@ -179,16 +199,19 @@
             </div>
 
 
-            <div class="shop-list">
-                <table class="table" id="table-box">
-                    <thead>
-                    <tr>
-                        <th scope="col">HairStyleList</th>
-                    </tr>
-                    </thead>
-                    <tbody id="shop-box">
-                    </tbody>
-                </table>
+            <!--            <div class="shop-list">-->
+            <!--                <table class="table" id="table-box">-->
+            <!--                    <thead>-->
+            <!--                    <tr>-->
+            <!--                        <th scope="col">HairStyleList</th>-->
+            <!--                    </tr>-->
+            <!--                    </thead>-->
+            <!--                    <tbody id="shop-box">-->
+            <!--                    </tbody>-->
+            <!--                </table>-->
+            <!--            </div>-->
+
+            <div id="cards-box" class="card-columns">
             </div>
 
         </div>
