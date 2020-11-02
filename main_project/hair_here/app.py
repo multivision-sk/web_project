@@ -53,7 +53,7 @@ def post_shop():
     url = 'https://dapi.kakao.com/v2/local/search/keyword.json?query={}'.format(searching)
     headers = {
 
-        "Authorization": "KakaoAK 55e7f20c7f8ea3c682fa473fc5d52869"
+        "Authorization": "KakaoAK apikey"
 
     }
     places = requests.get(url, headers=headers).json()['documents']
@@ -87,9 +87,7 @@ def post_style():
 
     db.styles.drop()
 
-    client_id = "3cM33RVzsCGd7lI0ZmCU"
-    client_secret = "KoezOPz8XR"
-
+   
     url = "https://openapi.naver.com/v1/search/image?query={}&display=30&sort=sim".format(searching)
     headers = {'X-Naver-Client-Id': client_id, 'X-Naver-Client-Secret': client_secret}
     contents = requests.get(url, headers=headers).json()['items']
