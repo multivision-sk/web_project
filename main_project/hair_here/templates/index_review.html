@@ -89,12 +89,15 @@
 
             $(document).ready(function () {
 
+                    showReview();
+
                     if ($.cookie('mytoken')) {
-                        showReview();
-                    }
-                    else {
-                        alert('로그인부터 해주세요') ;
-                        window.location.href = '/login'
+                         $("#post-box").show();
+
+                    } else {
+                        alert('리뷰를 남기려면 로그인부터 해주세요');
+                        $("#post-box").hide() ;
+
                     }
                 }
             );
@@ -111,7 +114,13 @@
                 $.ajax({
                     type: "POST",
                     url: "/review",
-                    data: {'shop': hairShop, 'style': hairStyle, 'date': hairDate, 'comment': hairComment},
+                    data: {
+                        'shop': hairShop,
+                        'style': hairStyle,
+                        'date': hairDate,
+                        'comment': hairComment,
+                        'token_give': $.cookie('mytoken')
+                    },
                     success: function (response) {
                         if (response["result"] == "success") {
                             location.reload();
@@ -143,10 +152,12 @@
                                 let hairComment = memos[i]['comment'];
                                 let hairLike = memos[i]['like'];
                                 let hairHate = memos[i]['hate'];
+                                let hairuser = memos[i]['user'];
 
 
                                 let tempHtml = `<div class="card">
                 <div class="card-body">
+                    <h5 class="card-title">'${hairuser}의 글'</h5>
                     <h5 class="card-title">${hairShop}</h5>
                     <h5 class="card-title">${hairStyle}</h5>
                     <h5 class="card-title">${hairDate}</h5>
@@ -204,6 +215,7 @@
                     }
                 });
             }
+
 
 
         </script>
@@ -266,6 +278,7 @@
             <div id="cards-box" class="card-columns">
                 <div class="card">
                     <div class="card-body">
+                        <h5 class="card-title"></h5>
                         <h5 class="card-title"></h5>
                         <h5 class="card-title"></h5>
                         <h5 class="card-title"></h5>

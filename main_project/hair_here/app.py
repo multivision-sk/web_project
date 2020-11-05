@@ -1,4 +1,4 @@
-#돌리기 전에 kakao api 와 client id / secret 추가하기 !!!!
+# 돌리기 전에 kakao api 와 client id / secret 추가하기 !!!!
 
 from flask import Flask, render_template, jsonify, request, session, redirect, url_for
 import requests
@@ -89,7 +89,7 @@ def post_style():
 
     db.styles.drop()
 
-   # 돌리기 전에 secret key에서 client id 와 client secret 추가하기 !!!
+    # 돌리기 전에 secret key에서 client id 와 client secret 추가하기 !!!
     client_id = '3cM33RVzsCGd7lI0ZmCU'
     client_secret = 'KoezOPz8XR'
 
@@ -122,22 +122,25 @@ def read_style():
 
 @app.route('/review', methods=['POST'])
 def write_review():
-
-
     hair_shop = request.form['shop']
     hair_style = request.form['style']
     hair_date = request.form['date']
     hair_comment = request.form['comment']
+    token_receive = request.form['token_give']
 
+    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+    print(payload)
+
+    userinfo = db.reguser.find_one({'id': payload['id']}, {'_id': 0})
 
     doc = {
         'shop': hair_shop,
         'style': hair_style,
         'date': hair_date,
         'comment': hair_comment,
-        'like' : 0 ,
-        'hate' : 0
-
+        'like': 0,
+        'hate': 0,
+        'user': userinfo['nick']
 
     }
 
@@ -153,10 +156,8 @@ def read_review():
     return jsonify({'result': 'success', 'comments': all_memo})
 
 
-
 @app.route('/api/like', methods=['POST'])
 def like_post():
-
     shop_receive = request.form['shop_give']
 
     shop_like = db.all.find_one({'shop': shop_receive})
@@ -208,7 +209,7 @@ def api_login():
     if result is not None:
         payload = {
             'id': id_receive,
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=10)
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(weeks=3)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256').decode('utf-8')
 
@@ -217,16 +218,18 @@ def api_login():
         return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
 
 
-# @app.route('/api/nick', methods=['GET'])
-# def api_valid():
-#     token_receive = request.headers['token_give']
-#     payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-#
-#     try:
-#         userinfo = db.reguser.find_one({'id': payload['id']}, {'_id': 0})
-#         return jsonify({'result': 'success', 'nickname': userinfo['nick']})
-#     except:
-#         return jsonify({'result': 'fail', 'msg': '로그인 시간이 만료되었습니다.'})
+@app.route('/api/nick', methods=['GET'])
+def api_valid():
+    token_receive = request.headers['token_give']
+    try:
+
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        print(payload)
+
+        userinfo = db.reguser.find_one({'id': payload['id']}, {'_id': 0})
+        return jsonify({'result': 'success', 'nickname': userinfo['nick']})
+    except jwt.ExpiredSignatureError:
+        return jsonify({'result': 'fail', 'msg': '로그인 시간이 만료되었습니다.'})
 
 
 if __name__ == '__main__':
