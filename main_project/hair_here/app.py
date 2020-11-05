@@ -1,3 +1,5 @@
+#돌리기 전에 kakao api 와 client id / secret 추가하기 !!!!
+
 from flask import Flask, render_template, jsonify, request, session, redirect, url_for
 import requests
 # from bs4 import BeautifulSoup
@@ -53,7 +55,7 @@ def post_shop():
     url = 'https://dapi.kakao.com/v2/local/search/keyword.json?query={}'.format(searching)
     headers = {
 
-        "Authorization": "KakaoAK apikey"
+        "Authorization": "KakaoAK 55e7f20c7f8ea3c682fa473fc5d52869"  # 돌리기 전에 api key 추가하기 !!
 
     }
     places = requests.get(url, headers=headers).json()['documents']
@@ -87,8 +89,11 @@ def post_style():
 
     db.styles.drop()
 
-   
-    url = "https://openapi.naver.com/v1/search/image?query={}&display=30&sort=sim".format(searching)
+   # 돌리기 전에 secret key에서 client id 와 client secret 추가하기 !!!
+    client_id = '3cM33RVzsCGd7lI0ZmCU'
+    client_secret = 'KoezOPz8XR'
+
+    url = "https://openapi.naver.com/v1/search/image?query={}&display=30".format(searching)
     headers = {'X-Naver-Client-Id': client_id, 'X-Naver-Client-Secret': client_secret}
     contents = requests.get(url, headers=headers).json()['items']
 
@@ -117,10 +122,13 @@ def read_style():
 
 @app.route('/review', methods=['POST'])
 def write_review():
+
+
     hair_shop = request.form['shop']
     hair_style = request.form['style']
     hair_date = request.form['date']
     hair_comment = request.form['comment']
+
 
     doc = {
         'shop': hair_shop,
@@ -129,6 +137,7 @@ def write_review():
         'comment': hair_comment,
         'like' : 0 ,
         'hate' : 0
+
 
     }
 
@@ -142,6 +151,7 @@ def read_review():
     all_memo = list(db.all.find({}, {'_id': False}).sort('date', 1))
 
     return jsonify({'result': 'success', 'comments': all_memo})
+
 
 
 @app.route('/api/like', methods=['POST'])
@@ -207,16 +217,16 @@ def api_login():
         return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
 
 
-@app.route('/api/nick', methods=['GET'])
-def api_valid():
-    token_receive = request.headers['token_give']
-    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-
-    try:
-        userinfo = db.reguser.find_one({'id': payload['id']}, {'_id': 0})
-        return jsonify({'result': 'success', 'nickname': userinfo['nick']})
-    except:
-        return jsonify({'result': 'fail', 'msg': '로그인 시간이 만료되었습니다.'})
+# @app.route('/api/nick', methods=['GET'])
+# def api_valid():
+#     token_receive = request.headers['token_give']
+#     payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+#
+#     try:
+#         userinfo = db.reguser.find_one({'id': payload['id']}, {'_id': 0})
+#         return jsonify({'result': 'success', 'nickname': userinfo['nick']})
+#     except:
+#         return jsonify({'result': 'fail', 'msg': '로그인 시간이 만료되었습니다.'})
 
 
 if __name__ == '__main__':

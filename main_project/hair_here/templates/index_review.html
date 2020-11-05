@@ -89,10 +89,16 @@
 
             $(document).ready(function () {
 
-
-                    showReview();
+                    if ($.cookie('mytoken')) {
+                        showReview();
+                    }
+                    else {
+                        alert('로그인부터 해주세요') ;
+                        window.location.href = '/login'
+                    }
                 }
-            )
+            );
+
 
             function postReview() {
 
@@ -109,6 +115,7 @@
                     success: function (response) {
                         if (response["result"] == "success") {
                             location.reload();
+
                         }
                     }
                 });
@@ -118,7 +125,7 @@
 
             function showReview() {
 
-                $('#cards-box').html("");
+                $('#cards-box').empty();
 
                 $.ajax({
                     type: "GET",
@@ -128,13 +135,14 @@
                         if (response["result"] == "success") {
 
                             let memos = response['comments'];
+
                             for (let i = 0; i < memos.length; i++) {
                                 let hairShop = memos[i]['shop'];
                                 let hairStyle = memos[i]['style'];
                                 let hairDate = memos[i]['date'];
                                 let hairComment = memos[i]['comment'];
-                                let hairLike = memos[i]['like'] ;
-                                let hairHate = memos[i]['hate'] ;
+                                let hairLike = memos[i]['like'];
+                                let hairHate = memos[i]['hate'];
 
 
                                 let tempHtml = `<div class="card">
@@ -161,8 +169,8 @@
                                 $('#cards-box').append(tempHtml);
 
                             }
-                        }
 
+                        }
                     }
                 });
             }
