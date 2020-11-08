@@ -42,12 +42,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <style>
-            #home-buttons {
+            /*#home-buttons {*/
+            /*    position: absolute;*/
+            /*    right: 200px;*/
+            /*    top: 100px;*/
+
+
+            /*}*/
+            .btn-group {
                 position: absolute;
-                right: 200px;
+                left: 550px;
                 top: 100px;
-
-
             }
 
 
@@ -160,13 +165,15 @@
 
 
                                 let tempHtml = `<div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">'${hairuser}의 글'</h5>
-                    <h5 class="card-title">${hairShop}</h5>
-                    <h5 class="card-title">${hairStyle}</h5>
-                    <h5 class="card-title">${hairDate}</h5>
-                    <p class="card-text">${hairComment}</p>
-                    <a href="#" onclick="likePost('${hairShop}')" class="card-footer-item has-text-info">
+  <div class="card-header">
+    ${hairuser}의 글
+  </div>
+  <div class="card-body">
+    <h3 class="card-title">${hairShop}</h3>
+    <h4 class="card-title">${hairStyle}</h4>
+    <h4 class="card-title">${hairDate}</h4>
+    <p class="card-text">${hairComment}</p>
+                   <a href="#" onclick="likePost('${hairShop}')" class="card-footer-item has-text-info">
                         좋아요! ${hairLike}
                         <span class="icon">
               <i class="fas fa-thumbs-up"></i>
@@ -178,8 +185,10 @@
               <i class="fas fa-thumbs-up"></i>
             </span>
                     </a>
-                </div>
-            </div>`
+
+
+  </div>
+</div>`
 
                                 $('#cards-box').append(tempHtml);
 
@@ -233,29 +242,15 @@
                 <h5>당신을 위한 헤어 스타일링</h5>
             </div>
 
-            <div class="make-buttons" id="home-buttons">
-                <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top"
-                        title="Tooltip on top" id="home-btn" onclick="location.href='/'">
-                    HairHome
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-secondary" onclick="location.href='/'">HairHome</button>
+                <button type="button" class="btn btn-secondary" onclick="location.href='/get_shop'">HairShop</button>
+                <button type="button" class="btn btn-secondary" onclick="location.href='/get_style'">HairStyle</button>
+                <button type="button" class="btn btn-secondary" onclick="location.href='/get_review'">HairReview
                 </button>
-                <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="right"
-                        title="Tooltip on right" id="shop-btn" onclick="location.href='/get_shop'">
-                    HairShop
-                </button>
-                <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom"
-                        title="Tooltip on bottom" id="style-btn" onclick="location.href='/get_style'">
-                    HairStyle
-                </button>
-                <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="left"
-                        title="Tooltip on left" id="review-btn" onclick="location.href='/get_review'">
-                    HairReview
-                </button>
-
-                <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="left"
-                        title="Tooltip on left" id="user-btn" onclick="location.href='/login'">
-                    HairUser
-                </button>
+                <button type="button" class="btn btn-secondary" onclick="location.href='/login'">HairUser</button>
             </div>
+
             <div id="post-box" class="form-post">
 
                 <div class="form-group">
@@ -298,3 +293,4 @@
 
     </body>
 </html>
+

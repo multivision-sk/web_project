@@ -31,11 +31,19 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <style>
-            #home-buttons {
-                position: absolute;
-                right: 200px;
-                top: 100px;
 
+
+            /*#home-buttons {*/
+            /*    position: absolute;*/
+            /*    right: 200px;*/
+            /*    top: 100px;*/
+
+
+            /*}*/
+            .btn-group {
+                position: absolute;
+                left: 550px;
+                top: 100px;
             }
 
 
@@ -44,16 +52,20 @@
                 left: 200px;
                 top: 10px;
 
+
             }
 
             .card-img-top {
                 width: 200px;
                 height: 200px;
+
+
             }
 
             #cards-box > div.card {
                 width: 200px;
                 height: 200px;
+
             }
 
 
@@ -63,6 +75,7 @@
                 left: 400px;
                 width: 500px;
                 height: 50px;
+
             }
 
             #cards-box {
@@ -70,6 +83,9 @@
                 left: auto;
                 top: 400px;
                 text-align: center;
+                display: inline-block;
+                column-break-inside : avoid ;
+
 
             }
 
@@ -164,28 +180,15 @@
                 <h5>당신을 위한 헤어 스타일링</h5>
             </div>
 
-            <div class="make-buttons" id="home-buttons">
-                <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top"
-                        title="Tooltip on top" id="home-btn" onclick="location.href='/'">
-                    HairHome
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-secondary" onclick="location.href='/'">HairHome</button>
+                <button type="button" class="btn btn-secondary" onclick="location.href='/get_shop'">HairShop</button>
+                <button type="button" class="btn btn-secondary" onclick="location.href='/get_style'">HairStyle</button>
+                <button type="button" class="btn btn-secondary" onclick="location.href='/get_review'">HairReview
                 </button>
-                <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="right"
-                        title="Tooltip on right" id="shop-btn" onclick="location.href='/get_shop'">
-                    HairShop
-                </button>
-                <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom"
-                        title="Tooltip on bottom" id="style-btn" onclick="location.href='/get_style'">
-                    HairStyle
-                </button>
-                <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="left"
-                        title="Tooltip on left" id="review-btn" onclick="location.href='/get_review'">
-                    HairReview
-                </button>
-                <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="left"
-                        title="Tooltip on left" id="user-btn" onclick="location.href='/login'">
-                    HairUser
-                </button>
+                <button type="button" class="btn btn-secondary" onclick="location.href='/login'">HairUser</button>
             </div>
+
 
             <div class="input-group">
                 <input type="text" class="form-control" aria-label="Text input with dropdown button" id="input-box"
@@ -214,6 +217,9 @@
             <!--            </div>-->
 
             <div id="cards-box" class="card-columns">
+                <div class="card">
+
+                </div>
             </div>
 
         </div>
