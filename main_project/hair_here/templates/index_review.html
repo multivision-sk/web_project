@@ -34,58 +34,66 @@
 
 
         <!--구글폰트-->
-        <link href="https://fonts.googleapis.com/css2?family=Gugi&family=Sunflower:wght@500&display=swap"
+        <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Nanum+Myeongjo&display=swap"
               rel="stylesheet">
 
         <!--        반응형 웹-->
 
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+         <meta name="viewport" content="width=640, user-scalable=yes">
 
         <style>
-            /*#home-buttons {*/
-            /*    position: absolute;*/
-            /*    right: 200px;*/
-            /*    top: 100px;*/
+
+            .wrap {
+                font-family: 'Nanum Gothic', sans-serif;
+                font-family: 'Nanum Myeongjo', serif;
+                min-width: 980px;
+            }
 
 
-            /*}*/
+            .header {
+                overflow: auto;
+            }
+
+
             .btn-group {
-                position: absolute;
-                left: 550px;
-                top: 100px;
+                float: right;
+                margin-right: 100px;
+                margin-top: 50px;
+
             }
 
 
             .title-font {
-                position: absolute;
-                left: 200px;
-                top: 10px;
+                white-space: nowrap;
+                text-align: center;
+                float: left;
+                margin-left: 100px;
+                margin-top: 20px;
+
 
             }
 
+
             #post-box {
-                position: absolute;
-                left: 450px;
-                top: 200px;
+
                 width: 400px;
                 height: 450px;
                 border: gray solid;
                 padding: 10px;
                 border-radius: 10px;
+                margin: 30px auto;
             }
 
 
             #cards-box {
-                position: absolute;
-                left: 70px;
-                top: 700px;
+               margin: 30px auto ;
+                min-width: 576px;
 
             }
 
             .card {
                 width: 300px;
                 height: 300px;
-                text-align: center;
                 background-color: palegoldenrod;
 
 
@@ -234,23 +242,26 @@
 
 
     </head>
-    <body>
+    <body >
 
         <div class="wrap">
-            <div class="title-font">
-                <h1 style="color:black;font-size:50px;text-shadow:3px 3px 10px gray"> Hair Here </h1>
-                <h5>당신을 위한 헤어 스타일링</h5>
-            </div>
+            <div class="header">
+                <div class="title-font">
+                    <h1 style="color:black;font-size:50px;text-shadow:3px 3px 10px gray"> Hair Here </h1>
+                    <h5>당신을 위한 헤어 스타일링</h5>
+                </div>
 
-            <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-secondary" onclick="location.href='/'">HairHome</button>
-                <button type="button" class="btn btn-secondary" onclick="location.href='/get_shop'">HairShop</button>
-                <button type="button" class="btn btn-secondary" onclick="location.href='/get_style'">HairStyle</button>
-                <button type="button" class="btn btn-secondary" onclick="location.href='/get_review'">HairReview
-                </button>
-                <button type="button" class="btn btn-secondary" onclick="location.href='/login'">HairUser</button>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-secondary" onclick="location.href='/'">HairHome</button>
+                    <button type="button" class="btn btn-secondary" onclick="location.href='/get_shop'">HairShop
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="location.href='/get_style'">HairStyle
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="location.href='/get_review'">HairReview
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="location.href='/login'">HairUser</button>
+                </div>
             </div>
-
             <div id="post-box" class="form-post">
 
                 <div class="form-group">

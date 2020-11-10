@@ -23,47 +23,59 @@
                 crossorigin="anonymous"></script>
 
         <!--구글폰트-->
-        <link href="https://fonts.googleapis.com/css2?family=Gugi&family=Sunflower:wght@500&display=swap"
+        <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Nanum+Myeongjo&display=swap"
               rel="stylesheet">
 
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+         <meta name="viewport" content="width=640, user-scalable=yes">
 
         <style>
-            /*#home-buttons {*/
-            /*    position: absolute;*/
-            /*    right: 200px;*/
-            /*    top: 100px;*/
 
-            /*}*/
+
+            .wrap {
+                font-family: 'Nanum Gothic', sans-serif;
+                font-family: 'Nanum Myeongjo', serif;
+                min-width: 980px;
+            }
+
+            .header {
+                overflow: auto;
+            }
+
+
             .btn-group {
-                position: absolute;
-                left: 550px;
-                top: 100px;
+                float: right;
+                margin-right: 100px;
+                margin-top: 50px;
+
             }
 
 
             .title-font {
-                position: absolute;
-                left: 200px;
-                top: 10px;
+                white-space: nowrap;
+                text-align: center;
+                float: left;
+                margin-left: 100px;
+                margin-top: 20px;
 
+
+            }
+
+            .search-inout {
+                margin: 0 auto;
             }
 
             .table {
                 width: 500px;
                 height: auto;
-                margin: auto;
-                position: absolute;
-                left: 400px;
-                top: 300px;
+                margin: 20px auto;
+
             }
 
             .input-group {
-                position: absolute;
-                top: 200px;
-                left: 400px;
                 width: 500px;
                 height: 50px;
+                margin: 30px auto;
+
             }
 
 
@@ -138,46 +150,49 @@
     <body>
 
         <div class="wrap">
+            <div class="header">
+                <div class="title-font">
+                    <h1 style="color:black;font-size:50px;text-shadow:3px 3px 10px gray"> Hair Here </h1>
+                    <h5>당신을 위한 헤어 스타일링</h5>
+                </div>
 
-            <div class="title-font">
-                <h1 style="color:black;font-size:50px;text-shadow:3px 3px 10px gray"> Hair Here </h1>
-                <h5>당신을 위한 헤어 스타일링</h5>
-            </div>
-
-            <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-secondary" onclick="location.href='/'">HairHome</button>
-                <button type="button" class="btn btn-secondary" onclick="location.href='/get_shop'">HairShop</button>
-                <button type="button" class="btn btn-secondary" onclick="location.href='/get_style'">HairStyle</button>
-                <button type="button" class="btn btn-secondary" onclick="location.href='/get_review'">HairReview
-                </button>
-                <button type="button" class="btn btn-secondary" onclick="location.href='/login'">HairUser</button>
-            </div>
-
-
-            <div class="input-group">
-                <input type="text" class="form-control" aria-label="Text input with dropdown button" id="input-box"
-                       placeholder="원하는 헤어샵(ex.여의도 미용실)">
-                <div class="input-group-append">
-
-                    <button onclick="searchShop()" class="btn btn-outline-secondary dropdown-toggle" type="button"
-                            data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">HairShop
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-secondary" onclick="location.href='/'">HairHome</button>
+                    <button type="button" class="btn btn-secondary" onclick="location.href='/get_shop'">HairShop
                     </button>
-
+                    <button type="button" class="btn btn-secondary" onclick="location.href='/get_style'">HairStyle
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="location.href='/get_review'">HairReview
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="location.href='/login'">HairUser</button>
                 </div>
             </div>
+            <div class="search-inout">
+                <div class="input-group">
+                    <input type="text" class="form-control" aria-label="Text input with dropdown button" id="input-box"
+                           placeholder="원하는 헤어샵(ex.여의도 미용실)">
+                    <div class="input-group-append">
+
+                        <button onclick="searchShop()" class="btn btn-outline-secondary dropdown-toggle" type="button"
+                                data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">HairShop
+                        </button>
+
+                    </div>
+                </div>
 
 
-            <div class="shop-list">
-                <table class="table" id="table-box">
-                    <thead>
-                    <tr>
-                        <th scope="col">HairShopList</th>
-                    </tr>
-                    </thead>
-                    <tbody id="shop-box">
-                    </tbody>
-                </table>
+                <div class="shop-list">
+                    <table class="table" id="table-box">
+                        <thead>
+                        <tr>
+                            <th scope="col">HairShopList</th>
+                        </tr>
+                        </thead>
+                        <tbody id="shop-box">
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
