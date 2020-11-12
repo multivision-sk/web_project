@@ -30,7 +30,17 @@
 
          <meta name="viewport" content="width=640, user-scalable=yes">
 
+        <!--ogtag-->
+        <meta property="og:title" content="Hair Here"/>
+        <meta property="og:description" content="HairHere의 헤어스타일"/>
+        <meta property="og:image" content="{{ url_for('static', filename='slide2.jpg') }}"/>
+
         <style>
+
+            body{
+                background-image: url("../static/hairhere_back.jpg");
+                background-size: cover;
+            }
 
 
             .wrap {

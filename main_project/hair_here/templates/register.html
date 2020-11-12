@@ -36,10 +36,19 @@
                 integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
                 crossorigin="anonymous"></script>
 
-         <meta name="viewport" content="width=640, user-scalable=yes">
+        <meta name="viewport" content="width=640, user-scalable=yes">
 
+        <!--ogtag-->
+        <meta property="og:title" content="Hair Here"/>
+        <meta property="og:description" content="HairHere의 회원가입페이지"/>
+        <meta property="og:image" content="{{ url_for('static', filename='slide2.jpg') }}"/>
 
         <style>
+
+            body {
+                background-image: url("../static/hairhere_back.jpg");
+                background-size: cover;
+            }
 
             .wrap {
                 width: 400px;
