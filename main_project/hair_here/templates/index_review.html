@@ -98,6 +98,8 @@
             #cards-box {
                margin: 30px auto ;
                 width: 1000px;
+                text-align: center ;
+                align-content: center;
 
 
 
@@ -193,13 +195,13 @@
     <h4 class="card-title">${hairStyle}</h4>
     <h4 class="card-title">${hairDate}</h4>
     <p class="card-text">${hairComment}</p>
-                   <a href="#" onclick="likePost('${hairShop}')" class="card-footer-item has-text-info">
+                   <a href="#" onclick="likePost('${hairShop}','${hairStyle}','${hairDate}','${hairuser}')" class="card-footer-item has-text-info">
                         좋아요! ${hairLike}
                         <span class="icon">
               <i class="fas fa-thumbs-up"></i>
             </span>
                     </a>
-                      <a href="#" onclick="hatePost('${hairShop}')" class="card-footer-item has-text-info">
+                      <a href="#" onclick="hatePost('${hairShop}','${hairStyle}','${hairDate}','${hairuser}')" class="card-footer-item has-text-info">
                         싫어요! ${hairHate}
                         <span class="icon">
               <i class="fas fa-thumbs-up"></i>
@@ -219,12 +221,12 @@
                 });
             }
 
-            function likePost(shopName) {
+            function likePost(shopName,styleName,dateName,userName) {
 
                 $.ajax({
                     type: 'POST',
                     url: '/api/like',
-                    data: {'shop_give': shopName},
+                    data: {'shop_give': shopName, 'style_give':styleName,'date_give':dateName,'user_give':userName },
                     success: function (response) {
                         if (response['result'] == 'success') {
                             window.location.reload();
@@ -234,12 +236,12 @@
                 });
             }
 
-            function hatePost(shopName) {
+            function hatePost(shopName,styleName,dateName,userName) {
 
                 $.ajax({
                     type: 'POST',
                     url: '/api/hate',
-                    data: {'shop_give': shopName},
+                    data: {'shop_give': shopName, 'style_give':styleName,'date_give':dateName,'user_give':userName},
                     success: function (response) {
                         if (response['result'] == 'success') {
                             window.location.reload();

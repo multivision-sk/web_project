@@ -160,10 +160,13 @@ def read_review():
 @app.route('/api/like', methods=['POST'])
 def like_post():
     shop_receive = request.form['shop_give']
+    style_receive = request.form['style_give']
+    date_receive = request.form['date_give']
+    user_receive = request.form['user_give']
 
-    shop_like = db.all.find_one({'shop': shop_receive})
+    shop_like = db.all.find_one({'shop': shop_receive,'style': style_receive,'date': date_receive,'user': user_receive})
     new_like = shop_like['like'] + 1
-    db.all.update_one({'shop': shop_receive}, {'$set': {'like': new_like}})
+    db.all.update_one({'shop': shop_receive,'style': style_receive,'date': date_receive,'user': user_receive}, {'$set': {'like': new_like}})
 
     return jsonify({'result': 'success'})
 
@@ -171,10 +174,13 @@ def like_post():
 @app.route('/api/hate', methods=['POST'])
 def hate_post():
     shop_receive = request.form['shop_give']
+    style_receive = request.form['style_give']
+    date_receive = request.form['date_give']
+    user_receive = request.form['user_give']
 
-    shop_hate = db.all.find_one({'shop': shop_receive})
+    shop_hate = db.all.find_one({'shop': shop_receive,'style': style_receive,'date': date_receive,'user': user_receive})
     new_hate = shop_hate['hate'] + 1
-    db.all.update_one({'shop': shop_receive}, {'$set': {'hate': new_hate}})
+    db.all.update_one({'shop': shop_receive,'style': style_receive,'date': date_receive,'user': user_receive}, {'$set': {'hate': new_hate}})
 
     return jsonify({'result': 'success'})
 
