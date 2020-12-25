@@ -13,5 +13,5 @@
 - 원하는 헤어스타일을 검색하여 이미지 정보를 얻을 수 있습니다.
 - 로그인 후 방문한 헤어샵 정보를 리뷰로 남겨서 실제 후기도 참고하고 자신의 헤어 일정을 관리할 수 있습니다. 
 
-
+# 비디오 링크 
 [![Video Label](http://img.youtube.com/vi/dcwpgG3K1l8/0.jpg)](https://youtu.be/dcwpgG3K1l8)
